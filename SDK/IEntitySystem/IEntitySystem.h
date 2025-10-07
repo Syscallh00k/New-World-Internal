@@ -35,8 +35,8 @@ namespace NewWorld {
         uintptr_t GetEntityIterator() const {
             if (!this) return 0;
 
-            return (*(__int64(__fastcall**)(__int64))(
-                *(DWORD*)this + VTableFunctions::EntityIterator))(reinterpret_cast<__int64>(this));
+            return (*(__int64(__fastcall**)())(
+                *(DWORD*)this + VTableFunctions::EntityIterator))();
         }
 
     };
@@ -44,3 +44,4 @@ namespace NewWorld {
 }
 
 #endif
+
