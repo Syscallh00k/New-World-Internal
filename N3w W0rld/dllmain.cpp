@@ -1,16 +1,6 @@
 #include "Entry/entry.h"
 
 DWORD WINAPI MainThread(LPVOID lpReserved) {
-
-    NewWorld::Global::NewWorld = (std::uintptr_t)(GetModuleHandle(NULL));
-    if (!NewWorld::Global::NewWorld)
-    {
-        printf("[/] Failed To Get Process Image\n");
-        return FALSE;
-    }
-
-    printf("[/] Found NewWorld.exe 0x%p\n", NewWorld::Global::NewWorld);
-
     NewWorld::Entry();
 
     return TRUE;
@@ -26,6 +16,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
         freopen_s(reinterpret_cast<FILE**>(stdout), "CONOUT$", "w", stdout);
         printf("[/] New World Internal\n");
         printf("[/] Creating Main Thread\n");
+        CreateThread(0, 0, (LPTHREAD_START_ROUTINE)NewWorld::Update, 0, 0, 0);
         CreateThread(0, 0, MainThread, lpReserved, 0, 0);
     }
 

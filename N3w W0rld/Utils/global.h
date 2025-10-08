@@ -14,16 +14,17 @@
 
 namespace NewWorld {
 	namespace Global {
-		inline std::uintptr_t NewWorld;
-		inline std::uintptr_t ISystem;
-		inline std::uintptr_t IConsole;
-		inline std::uintptr_t IEngine;
-		inline std::uintptr_t IWorld;
-		inline std::uintptr_t IRenderer;
-		inline std::uintptr_t gEnv;
-		inline std::uintptr_t ISky;
-		inline std::uintptr_t IGame;
-		inline std::uintptr_t IObjectManager;
+		std::uintptr_t NewWorld;
+		std::uintptr_t ISystem;
+		std::uintptr_t IConsole;
+		std::uintptr_t IEngine;
+		std::uintptr_t IWorld;
+		std::uintptr_t IRenderer;
+		std::uintptr_t gEnv;
+		std::uintptr_t IEntitySystem;
+		std::uintptr_t ISky;
+		std::uintptr_t IGame;
+		std::uintptr_t IObjectManager;
 
 	}
 }

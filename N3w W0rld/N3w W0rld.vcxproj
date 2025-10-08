@@ -71,7 +71,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Users\parke\Desktop\N3w W0rld\N3w W0rld\N3w W0rld\Hooks\minhook\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\parke\Desktop\New-World-Internal\N3w W0rld\Hooks\minhook\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

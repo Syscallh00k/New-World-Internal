@@ -2,38 +2,35 @@
 #define OFFSETS_H
 
 #include <Windows.h>
-
+//https://obf-io.deobfuscate.io/
 // global objs https://github.com/aws/lumberyard/blob/master/dev/Code/CryEngine/Cry3DEngine/3dEngine.cpp#L184
-// gEnv https://github.com/aws/lumberyard/blob/413ecaf24d7a534801cac64f50272fe3191d278f/dev/Code/CryEngine/CrySystem/TestSystemLegacy.cpp#L255
 
-//0x7FF6E6AA0000
+//global setup 48 89 5C 24 08 48 89 74 24 18 57 48 83 EC 50 48 8B DA 33
 namespace NewWorld {
 	namespace Offsets {
 		namespace Global {
-			inline const char* MainSystem_Sig = "48 89 35 3D BC 70 03 48 8B 0D 3E 38 90 03";
-			inline const char* MainEnviorment_Sig = "48 89 05 A1 BF 53 03 48 89 05 A1 BF 53 03";
-			inline std::uint64_t MainSystem = 0;
-			inline std::uint64_t MainEnviorment = 0;
-			inline const std::uint64_t ObjectManager = 0xA2A4158; 
-			inline const std::uint64_t SkyManager = 0xA2A4168;
-			inline const std::uint64_t GameManager = 0xA2A4178;
+			const char* MainSystem_Sig = "48 89 35 3D BC 70 03 48 8B 0D 3E 38 90 03";
+			const char* MainEnviorment_Sig = "48 89 05 A1 BF 53 03 48 89 05 A1 BF 53 03";
+			std::uint64_t MainSystem = 0xA2D6498;
+			std::uint64_t MainEnviorment = 0xA4CE0A0;
+			const std::uint64_t ObjectManager = 0xA2A4158; 
+			const std::uint64_t SkyManager = 0xA2A4168;
+			const std::uint64_t GameManager = 0xA2A4178;
 			
 		}
 		namespace Functions {
-			inline const std::uint64_t ProcessPlayer = 0x5BBB960;
+			const std::uint64_t ProcessPlayer = 0x5BBB960;
 		}
 		namespace Engine {
-			inline const std::uint64_t Renderer = 0x138;
+			const std::uint64_t Renderer = 0x138;
 		}
 		namespace Enviroment {
-			inline const std::uint64_t EntitySystem = 0xE;
-			inline const std::uint64_t PreCachedFlags = 0x247;
-			inline const std::uint64_t CachedWorld = 0xF;
+			const std::uint64_t EntitySystem = 0x70;
+			const std::uint64_t PreCachedFlags = 0x247;
+			const std::uint64_t CachedWorld = 0xF * 8;
 		}
 
 	}
 }
-
-// EntitySystem -> https://github.com/aws/lumberyard/blob/413ecaf24d7a534801cac64f50272fe3191d278f/dev/Code/CryEngine/CryCommon/IEntitySystem.h#L422
 
 #endif 

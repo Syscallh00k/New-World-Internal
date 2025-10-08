@@ -5,7 +5,7 @@
 #include <cstdio>
 
 namespace NewWorld {
-
+    //https://github.com/aws/lumberyard/blob/413ecaf24d7a534801cac64f50272fe3191d278f/dev/Code/CryEngine/CrySystem/TestSystemLegacy.cpp#L255
     class SSystemGlobalEnviornment {
     public:
         enum VTableFunctions : size_t {
@@ -13,49 +13,25 @@ namespace NewWorld {
             PreCacheLevelEntity = 0xC0
         };
 
-        using CallCast = uintptr_t(__fastcall*)(uintptr_t);
-
-        uintptr_t GetVFuncPtr(size_t index) const {
-            if (!this) return 0;
-            uintptr_t* vtable = *(uintptr_t**)this;
-            if (!vtable) return 0;
-            return vtable[index];
-        }
-
-        uintptr_t CallVFunc(size_t index) const {
-            uintptr_t func = GetVFuncPtr(index);
-            if (!func) {
-                printf("[CallVFunc] Invalid vfunc index %zu\n", index);
-                return 0;
-            }
-            auto fn = reinterpret_cast<CallCast>(func);
-            return fn(reinterpret_cast<uintptr_t>(this));
-        }
-
         IEntityClassRegistry* GetClassRegistry() const {
-            uintptr_t funcAddr = GetVFuncPtr(ClassRegistry);
-            printf("[GetClassRegistry] funcAddr = %p\n", (void*)funcAddr);
-            if (!funcAddr) return 0;
-            auto fn = reinterpret_cast<CallCast>(funcAddr);
-            return (IEntityClassRegistry*)fn(reinterpret_cast<uintptr_t>(this));
+            printf("[GetClassRegistry] calling vfunc index %zu\n", ClassRegistry);
+            using Fn = IEntityClassRegistry * (__fastcall*)(uintptr_t);
+            return Memory::CallVFunc<Fn>(ClassRegistry, (uintptr_t)this);
         }
 
-        bool CachedObjects() {
+        bool CachedObjects() const {
             return *(bool*)((uintptr_t)this + Offsets::Enviroment::PreCachedFlags);
         }
 
-        uintptr_t GetPreCacheLevelEntity() const{
-            uintptr_t funcAddr = GetVFuncPtr(PreCacheLevelEntity);
-            printf("[GetPreCacheLevelEntity] funcAddr = %p\n", (void*)funcAddr);
-            if (!funcAddr) return 0;
-            auto fn = reinterpret_cast<CallCast>(funcAddr);
+        uintptr_t GetPreCacheLevelEntity() const {
+            printf("[GetPreCacheLevelEntity] calling vfunc index %zu\n", PreCacheLevelEntity);
+            using Fn = uintptr_t(__fastcall*)(uintptr_t, uintptr_t);
             uintptr_t cached_objects = *(uintptr_t*)((uintptr_t)this + Offsets::Enviroment::CachedWorld);
-            if (!cached_objects)return 0;
-            return fn(cached_objects);
+            if (!cached_objects) return 0;
+            return Memory::CallVFunc<Fn>(PreCacheLevelEntity, (uintptr_t)this, cached_objects);
         }
     };
 
 }
-
 
 #endif

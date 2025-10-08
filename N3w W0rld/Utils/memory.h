@@ -112,7 +112,42 @@ namespace NewWorld {
 			}
 			return NULL;
 		}
+
+		template<typename Fn, typename... Args>
+		auto CallVFunc(size_t index, uintptr_t thiz, Args... args) {
+			if (!thiz) {
+				printf("[CallVFunc] Invalid this pointer\n");
+				using Ret = std::invoke_result_t<Fn, uintptr_t, Args...>;
+				if constexpr (!std::is_void_v<Ret>)
+					return Ret{};
+				else
+					return;
+			}
+
+			auto vtable = *reinterpret_cast<uintptr_t**>(thiz);
+			if (!vtable) {
+				printf("[CallVFunc] Null vtable\n");
+				using Ret = std::invoke_result_t<Fn, uintptr_t, Args...>;
+				if constexpr (!std::is_void_v<Ret>)
+					return Ret{};
+				else
+					return;
+			}
+
+			auto func = reinterpret_cast<Fn>(vtable[index]);
+			if (!func) {
+				printf("[CallVFunc] Invalid vfunc index %zu\n", index);
+				using Ret = std::invoke_result_t<Fn, uintptr_t, Args...>;
+				if constexpr (!std::is_void_v<Ret>)
+					return Ret{};
+				else
+					return;
+			}
+
+			return func(*(uintptr_t*)thiz, args...);
+		}
 	}
+
 }
 
 #endif
