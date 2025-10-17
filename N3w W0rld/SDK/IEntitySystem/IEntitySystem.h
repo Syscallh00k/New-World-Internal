@@ -11,14 +11,19 @@ namespace NewWorld {
     class IEntitySystem {
     public:
         enum VTableFunctions : size_t {
-            EntityIterator = 0x0B8 / sizeof(uintptr_t),
+            EntityIterator = 0xB8LL / sizeof(uintptr_t),
             ClassRegistry = 0x60 / sizeof(uintptr_t),
             GetEntityByName = 0x128 / sizeof(uintptr_t)
         };
 
-        uintptr_t GetEntityIterator() {
-            using Fn =   uintptr_t(__fastcall*)(uintptr_t);
-            return Memory::CallVFunc<Fn>(EntityIterator, (uintptr_t)this);
+        IEntityIt* GetEntityIterator() {
+            using Fn = uintptr_t(__fastcall*)(uintptr_t);
+            return (IEntityIt*)Memory::CallVFunc<Fn>(EntityIterator, (uintptr_t)this);
+        }
+
+        IEntityClassRegistry* GetClassRegistry() {
+            using Fn = uintptr_t(__fastcall*)(uintptr_t);
+            return (IEntityClassRegistry*)Memory::CallVFunc<Fn>(ClassRegistry, (uintptr_t)this);
         }
 
         uintptr_t FindEntityByName(const char* name) {

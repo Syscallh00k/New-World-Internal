@@ -11,8 +11,8 @@ namespace NewWorld {
 		namespace Global {
 			const char* MainSystem_Sig = "48 89 35 3D BC 70 03 48 8B 0D 3E 38 90 03";
 			const char* MainEnviorment_Sig = "48 89 05 A1 BF 53 03 48 89 05 A1 BF 53 03";
-			std::uint64_t MainSystem = 0xA2D6498;
-			std::uint64_t MainEnviorment = 0xA4CE0A0;
+			const std::uint64_t MainSystem = 0xA516D38;
+			const std::uint64_t MainEnviorment = 0xA70E9E0;
 			const std::uint64_t ObjectManager = 0xA2A4158; 
 			const std::uint64_t SkyManager = 0xA2A4168;
 			const std::uint64_t GameManager = 0xA2A4178;

@@ -15,7 +15,8 @@ namespace NewWorld {
             I3DEngine = 0x1D8 / sizeof(uintptr_t),
             UserName = 0x78 / sizeof(uintptr_t),
             Unknown_one = 0x190L / sizeof(uintptr_t),
-            Unknown_two = 0x1A0L / sizeof(uintptr_t)
+            Unknown_two = 0x1A0L / sizeof(uintptr_t),
+			MainCamera = 0x318 / sizeof(uintptr_t)
         };
 
         uintptr_t GetI3DEngine() {
@@ -26,6 +27,11 @@ namespace NewWorld {
         uintptr_t GetUnknownOne() {
             using Fn = uintptr_t(__fastcall*)(uintptr_t);
             return Memory::CallVFunc<Fn>(Unknown_one, (uintptr_t)this);
+        }
+
+        uintptr_t GetCamera() {
+            using Fn = uintptr_t(__fastcall*)(uintptr_t);
+            return Memory::CallVFunc<Fn>(MainCamera, (uintptr_t)this);
         }
 
         uintptr_t GetIConsole() {

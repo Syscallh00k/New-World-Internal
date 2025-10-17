@@ -4,6 +4,15 @@
 #include <cstdint>
 #include <cstdio>
 
+
+// Description:
+//   Global environment.
+//   Contains pointers to all global often needed interfaces.
+//    This is a faster way to get interface pointer then calling ISystem interface to retrieve one.
+// Notes:
+//   Some pointers can be NULL, use with care.
+// See also:
+//   ISystem
 namespace NewWorld {
     //https://github.com/aws/lumberyard/blob/413ecaf24d7a534801cac64f50272fe3191d278f/dev/Code/CryEngine/CrySystem/TestSystemLegacy.cpp#L255
     class SSystemGlobalEnviornment {

@@ -22,6 +22,7 @@ namespace NewWorld {
 		std::uintptr_t IRenderer;
 		std::uintptr_t gEnv;
 		std::uintptr_t IEntitySystem;
+		std::uintptr_t CCamera;
 		std::uintptr_t ISky;
 		std::uintptr_t IGame;
 		std::uintptr_t IObjectManager;

@@ -144,7 +144,7 @@ namespace NewWorld {
 					return;
 			}
 
-			return func(*(uintptr_t*)thiz, args...);
+			return func((uintptr_t)thiz, args...);
 		}
 	}
 
