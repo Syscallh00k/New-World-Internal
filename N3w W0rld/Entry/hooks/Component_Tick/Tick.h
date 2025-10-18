@@ -8,7 +8,6 @@ namespace NewWorld {
 
 		namespace Component
 		{
-
             typedef void(*ComponentApplicationTick_s) (uintptr_t, float);
             ComponentApplicationTick_s ComponentApplicationTick_o = nullptr;
 
@@ -49,6 +48,7 @@ namespace NewWorld {
                 {
                     std::lock_guard<std::mutex> lock(Global::listMtx);
                     Global::EntityList.swap(temp_objs);
+                    temp_objs.clear();
                 }
 
                 delta_time += 0.009f;

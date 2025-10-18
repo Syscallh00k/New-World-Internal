@@ -107,7 +107,10 @@
     <ClInclude Include="SDK\Player\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\crc.h">
+    <ClInclude Include="SDK\Lua\Lua.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\math.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

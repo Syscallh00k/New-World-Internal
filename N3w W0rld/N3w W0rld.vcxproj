@@ -71,7 +71,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Users\parke\Desktop\New-World-Internal\N3w W0rld\Hooks\minhook\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\parke\OneDrive\Desktop\New-World-Internal\N3w W0rld\Hooks\minhook\include;C:\Users\parke\Desktop\New-World-Internal\N3w W0rld\Hooks\minhook\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -168,11 +168,12 @@
     <ClInclude Include="SDK\IEntitySystem\IEntitySystem.h" />
     <ClInclude Include="SDK\IObjManager\IObjectManager.h" />
     <ClInclude Include="SDK\ISystem\ISystem.h" />
+    <ClInclude Include="SDK\Lua\Lua.h" />
     <ClInclude Include="SDK\Player\Player.h" />
     <ClInclude Include="SDK\sdk.h" />
     <ClInclude Include="SDK\SSystemGlobalEnvironment\SSystemGlobalEnvironment.h" />
-    <ClInclude Include="Utils\crc.h" />
     <ClInclude Include="Utils\global.h" />
+    <ClInclude Include="Utils\math.h" />
     <ClInclude Include="Utils\memory.h" />
     <ClInclude Include="Utils\offsets.h" />
   </ItemGroup>

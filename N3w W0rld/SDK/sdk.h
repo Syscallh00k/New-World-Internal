@@ -10,5 +10,6 @@
 #include "Player/Player.h"
 #include "IObjManager/IObjectManager.h"
 #include "SSystemGlobalEnvironment/SSystemGlobalEnvironment.h"
+#include "Lua/Lua.h"
 
 #endif

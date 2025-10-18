@@ -7,6 +7,8 @@ namespace NewWorld {
 
     void Update() {
 
+        bool once = false;
+
         Global::NewWorld = (std::uintptr_t)(GetModuleHandle(NULL));
         if (!Global::NewWorld)
         {
@@ -17,10 +19,9 @@ namespace NewWorld {
 
         while (true) {
 
-            static bool once = false;
             if (!Global::NewWorld)continue;
 
-            Global::ISystem = *(uintptr_t*)(Global::NewWorld + Offsets::Global::MainSystem); //Memory::sig_scan(Global::NewWorld, Offsets::Global::MainSystem_Sig);
+            Global::ISystem = *(uintptr_t*)(Global::NewWorld + Offsets::Global::MainSystem); 
 
             Global::gEnv = *(uintptr_t*)(Global::NewWorld + Offsets::Global::MainEnviorment);
 
@@ -34,7 +35,9 @@ namespace NewWorld {
 
                 MH_Initialize();
                 MH_CreateHook((void*)component_tick, &Hooks::Component::ComponentApplicationTickHook, reinterpret_cast<void**>(&Hooks::Component::ComponentApplicationTick_o));
+
                 MH_EnableHook((void*)component_tick);
+
                 printf("[/] Component Tick Hook Placed\n");
 
                 once = true;
@@ -79,7 +82,4 @@ namespace NewWorld {
 	}
 }
 
-// entity cpp https://github.com/aws/lumberyard/blob/413ecaf24d7a534801cac64f50272fe3191d278f/dev/Code/Framework/AzCore/AzCore/Component/Entity.cpp
-// entity hpp https://github.com/aws/lumberyard/blob/413ecaf24d7a534801cac64f50272fe3191d278f/dev/Code/Framework/AzCore/AzCore/Component/Entity.h
-// entity -> ComponentArrayType
 #endif

@@ -1,9 +1,6 @@
 #ifndef ISystem_H
 #define ISYSTEM_H
 
-#include <cstdint>
-#include <cstdio>
-
 namespace NewWorld {
 
     //https://github.com/aws/lumberyard/blob/413ecaf24d7a534801cac64f50272fe3191d278f/dev/Code/CryEngine/CryCommon/ISystem.h#L962
@@ -14,8 +11,8 @@ namespace NewWorld {
             PhysicalWorld = 0x1D0 / sizeof(uintptr_t),
             I3DEngine = 0x1D8 / sizeof(uintptr_t),
             UserName = 0x78 / sizeof(uintptr_t),
-            Unknown_one = 0x190L / sizeof(uintptr_t),
-            Unknown_two = 0x1A0L / sizeof(uintptr_t),
+            Unknown = 0x190L / sizeof(uintptr_t),
+            IConsole = 0x1A0L / sizeof(uintptr_t),
 			MainCamera = 0x318 / sizeof(uintptr_t)
         };
 
@@ -24,9 +21,9 @@ namespace NewWorld {
             return Memory::CallVFunc<Fn>(I3DEngine, (uintptr_t)this);
         }
 
-        uintptr_t GetUnknownOne() {
+        uintptr_t GetUnknown() {
             using Fn = uintptr_t(__fastcall*)(uintptr_t);
-            return Memory::CallVFunc<Fn>(Unknown_one, (uintptr_t)this);
+            return Memory::CallVFunc<Fn>(Unknown, (uintptr_t)this);
         }
 
         uintptr_t GetCamera() {
@@ -36,7 +33,7 @@ namespace NewWorld {
 
         uintptr_t GetIConsole() {
             using Fn = uintptr_t(__fastcall*)(uintptr_t);
-            return Memory::CallVFunc<Fn>(Unknown_two, (uintptr_t)this);
+            return Memory::CallVFunc<Fn>(IConsole, (uintptr_t)this);
         }
 
         const char* GetLocalUser() {

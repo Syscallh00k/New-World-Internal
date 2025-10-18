@@ -11,11 +11,8 @@
 
 #include "memory.h"
 #include "offsets.h"
+#include "math.h"
 
-class Vector3 {
-public:
-	float x, y, z;
-};
 namespace NewWorld {
 	namespace Global {
 		std::uintptr_t NewWorld;

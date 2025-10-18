@@ -1,9 +1,6 @@
 #ifndef IObjectManager_H
 #define IObjectManager_H
 
-#include <cstdint>
-#include <cstdio>
-
 namespace NewWorld {
     //https://github.com/aws/lumberyard/blob/413ecaf24d7a534801cac64f50272fe3191d278f/dev/Code/CryEngine/Cry3DEngine/ObjMan.h#L101
     class IObjectManager {

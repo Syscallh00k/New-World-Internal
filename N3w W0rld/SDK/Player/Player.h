@@ -1,10 +1,6 @@
 #ifndef Player_H
 #define Player_H
 
-#include <cstdint>
-#include <cstdio>
-
-
 namespace NewWorld {
     class Player {
     public:

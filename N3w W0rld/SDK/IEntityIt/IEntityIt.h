@@ -6,7 +6,7 @@ namespace NewWorld {
     class IEntityIt {
     public:
         enum VTableFunctions : size_t {
-            CreateV = 0x00 / 8,
+            CreateV = 0x00,
             MoveFirstV = 0x08 / 8,
             ReleaseV = 0x10 / 8,
             IsEndV = 0x18 / 8,

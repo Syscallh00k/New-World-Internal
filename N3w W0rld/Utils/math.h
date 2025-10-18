@@ -1,0 +1,54 @@
+#ifndef Math_H
+#define Math_H
+
+#include <math.h>
+
+namespace NewWorld{
+
+	class Vector3 {
+	public:
+		float x, y, z;
+
+		Vector3(float _x, float _y, float _z) {
+			_x = x;
+			_y = y;
+			_z = z;
+		}
+		Vector3 operator+(Vector3 value) {
+			return Vector3(value.x + x, value.y + y, value.z + z);
+		}
+		Vector3 operator-(Vector3 value) {
+			return Vector3(value.x - x, value.y - y, value.z + z);
+		}
+		Vector3 operator/(Vector3 value) {
+			return Vector3(value.x / x, value.y / y, value.z + z);
+		}
+		Vector3 operator*(Vector3 value) {
+			return Vector3(value.x * x, value.y * y, value.z);
+		}
+	};
+
+	class Vector2 {
+	public:
+		float x, y;
+
+		Vector2(float _x, float _y) {
+			_x = x;
+			_y = y;
+		}
+		Vector2 operator+(Vector2 value) {
+			return Vector2(value.x + x, value.y + y);
+		}
+		Vector2 operator-(Vector2 value) {
+			return Vector2(value.x - x, value.y - y);
+		}
+		Vector2 operator/(Vector2 value) {
+			return Vector2(value.x / x, value.y / y);
+		}
+		Vector2 operator*(Vector2 value) {
+			return Vector2(value.x * x, value.y * y);
+		}
+	};
+}
+
+#endif
