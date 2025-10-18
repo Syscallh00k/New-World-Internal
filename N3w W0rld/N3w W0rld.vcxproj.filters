@@ -107,6 +107,9 @@
     <ClInclude Include="SDK\Player\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\crc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Hooks\minhook\dll_resources\MinHook.def">

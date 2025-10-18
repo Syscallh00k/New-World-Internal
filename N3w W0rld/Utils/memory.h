@@ -64,6 +64,12 @@ namespace NewWorld {
                 printf("[%02zu] %p  module=%p  prot=0x%x\n", i, (void*)entry, mbi.AllocationBase, mbi.Protect);
             }
         }
+		template<typename T>
+		static bool SafeRead(uintptr_t addr, T& out)
+		{
+			SIZE_T bytesRead = 0;
+			return ReadProcessMemory(GetCurrentProcess(), (LPCVOID)addr, &out, sizeof(T), &bytesRead) && bytesRead == sizeof(T);
+		}
 
 		uintptr_t sig_scan(uintptr_t module, const char* pattern)
 		{

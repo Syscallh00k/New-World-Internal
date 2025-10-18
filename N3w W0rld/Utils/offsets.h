@@ -19,6 +19,24 @@ namespace NewWorld {
 		namespace Functions {
 			const std::uint64_t ComponentTick = 0x147AEE0; // updated
 			const std::uint64_t DependencySort = 0x13EA3F0; // updated https://github.com/aws/lumberyard/blob/413ecaf24d7a534801cac64f50272fe3191d278f/dev/Code/Framework/AzCore/AzCore/Component/Entity.cpp#L1069
+
+			const std::uint64_t lua_getmetatable = 0x078B7380;
+			const std::uint64_t lua_createtable = 0x078B6FA0;
+			const std::uint64_t lua_pushliteral = 0x0ABF07D0;
+			const std::uint64_t lua_pushcclosure = 0x078B7890;
+			const std::uint64_t lua_rawset = 0x078B7CC0;
+			const std::uint64_t lua_atpanic = 0x078B6EB0;
+			const std::uint64_t luaL_openlibs = 0x078B9800;
+			const std::uint64_t lua_pushglobaltable = 0x078B7B70;
+			const std::uint64_t lua_newstate = 0x078B6B60;
+			const std::uint64_t lua_pop = 0x078B8100;
+			const std::uint64_t lua_pushstring = 0x078B7AA0;
+			const std::uint64_t lua_pushlightuserdata = 0x078B79D0;
+			const std::uint64_t lua_pushboolean = 0x078B7870;
+			const std::uint64_t lua_tostring = 0x078B82D0;
+			const std::uint64_t lua_loadfile = 0x078BA7C0;
+			const std::uint64_t lua_pcall = 0x078CBDB0;
+
 		}
 		namespace Engine {
 			const std::uint64_t Renderer = 0x138;

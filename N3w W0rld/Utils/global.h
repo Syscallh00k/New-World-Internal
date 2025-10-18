@@ -7,6 +7,7 @@
 #include <thread>
 #include <filesystem>
 #include <mutex>
+#include <MinHook.h>
 
 #include "memory.h"
 #include "offsets.h"
@@ -20,15 +21,10 @@ namespace NewWorld {
 		std::uintptr_t NewWorld;
 		std::uintptr_t ISystem;
 		std::uintptr_t IConsole;
-		std::uintptr_t IEngine;
-		std::uintptr_t IWorld;
-		std::uintptr_t IRenderer;
 		std::uintptr_t gEnv;
 		std::uintptr_t IEntitySystem;
 		std::uintptr_t CCamera;
-		std::uintptr_t ISky;
 		std::uintptr_t IGame;
-		std::uintptr_t IObjectManager;
 
 		std::mutex listMtx;
 		std::vector<std::uintptr_t> EntityList;
