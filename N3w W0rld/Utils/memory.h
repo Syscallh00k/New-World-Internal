@@ -133,7 +133,6 @@ namespace NewWorld {
 				else
 					return;
 			}
-
 			auto func = reinterpret_cast<Fn>(vtable[index]);
 			if (!func) {
 				printf("[CallVFunc] Invalid vfunc index %zu\n", index);

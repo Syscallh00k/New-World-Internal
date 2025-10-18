@@ -152,6 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entry\entry.h" />
+    <ClInclude Include="Entry\hooks\Component_Tick\Tick.h" />
     <ClInclude Include="Hooks\Kiero.h" />
     <ClInclude Include="Hooks\minhook\include\MinHook.h" />
     <ClInclude Include="Hooks\minhook\src\buffer.h" />
@@ -167,6 +168,7 @@
     <ClInclude Include="SDK\IEntitySystem\IEntitySystem.h" />
     <ClInclude Include="SDK\IObjManager\IObjectManager.h" />
     <ClInclude Include="SDK\ISystem\ISystem.h" />
+    <ClInclude Include="SDK\Player\Player.h" />
     <ClInclude Include="SDK\sdk.h" />
     <ClInclude Include="SDK\SSystemGlobalEnvironment\SSystemGlobalEnvironment.h" />
     <ClInclude Include="Utils\global.h" />

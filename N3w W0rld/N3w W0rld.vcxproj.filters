@@ -101,6 +101,12 @@
     <ClInclude Include="SDK\IAntiCheatManager\IAntiCheatManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Entry\hooks\Component_Tick\Tick.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\Player\Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Hooks\minhook\dll_resources\MinHook.def">

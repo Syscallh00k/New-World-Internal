@@ -6,12 +6,15 @@
 #include <vector>
 #include <thread>
 #include <filesystem>
-
+#include <mutex>
 
 #include "memory.h"
 #include "offsets.h"
 
-
+class Vector3 {
+public:
+	float x, y, z;
+};
 namespace NewWorld {
 	namespace Global {
 		std::uintptr_t NewWorld;
@@ -26,6 +29,9 @@ namespace NewWorld {
 		std::uintptr_t ISky;
 		std::uintptr_t IGame;
 		std::uintptr_t IObjectManager;
+
+		std::mutex listMtx;
+		std::vector<std::uintptr_t> EntityList;
 
 	}
 }

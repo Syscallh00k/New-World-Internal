@@ -7,6 +7,7 @@
 #include "IEntityIt/IEntityIt.h"
 #include "IEntitySystem/IEntitySystem.h"
 #include "ISystem/ISystem.h"
+#include "Player/Player.h"
 #include "IObjManager/IObjectManager.h"
 #include "SSystemGlobalEnvironment/SSystemGlobalEnvironment.h"
 
