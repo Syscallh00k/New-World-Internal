@@ -1,12 +1,7 @@
 #ifndef OFFSETS_H
 #define OFFSETS_H
 
-#include <Windows.h>
-
-//https://obf-io.deobfuscate.io/
-// global objs https://github.com/aws/lumberyard/blob/master/dev/Code/CryEngine/Cry3DEngine/3dEngine.cpp#L184
-
-//global setup 48 89 5C 24 08 48 89 74 24 18 57 48 83 EC 50 48 8B DA 33
+#include <cstdio>
 
 namespace NewWorld {
 	namespace Offsets {
@@ -27,17 +22,17 @@ namespace NewWorld {
 				const std::uint64_t lua_pushcclosure = 0x078B7890;
 				const std::uint64_t lua_rawset = 0x078B7CC0;
 				const std::uint64_t lua_atpanic = 0x078B6EB0;
-				const std::uint64_t luaL_openlibs = 0x078B9800;
+				const std::uint64_t luaL_openlibs = 0x078B9800; //48 89 5C 24 ? 57 48 83 EC 20 48 8B F9 48 8D 1D ? ? ? ?
 				const std::uint64_t lua_pushglobaltable = 0x078B7B70;
 				const std::uint64_t lua_newstate = 0x078B6B60;
 				const std::uint64_t lua_pop = 0x078B8100;
 				const std::uint64_t lua_pushstring = 0x078B7AA0;
 				const std::uint64_t lua_pushlightuserdata = 0x078B79D0;
 				const std::uint64_t lua_pushboolean = 0x078B7870;
-				const std::uint64_t lua_tostring = 0x078B82D0;
-				const std::uint64_t lua_loadfile = 0x078BA7C0;
+				const std::uint64_t lua_tostring = 0x078B82D0; //  E8 ? ? ? ? 80 38 23 call func str %.14g
+				const std::uint64_t lua_loadfile = 0x078BA7C0; // 48 89 6C 24 ? 48 89 74 24 ? 57 48 81 EC ? ? ? ? 48 8B EA 48 8B F9 E8 ? ? ? ? =stdin | rb | reopen
 				const std::uint64_t lua_cpcall = 0x078CBDB0; // =(debug command)
-				const std::uint64_t lua_pcall = 0x78B77E0; // [Debug Lib Error]:call_lua_function Call '%s' error. ErrorCode: %d, ErrorMessage: %s.\n
+				const std::uint64_t lua_pcall = 0x78B77E0; //E8 ? ? ? ? 8B F0 85 C0 74 5D [Debug Lib Error]:call_lua_function Call 
 				const std::uint64_t lua_rawget = 0x78B7C40;
 				const std::uint64_t lua_isfunction = 0x78B8480;
 				const std::uint64_t lua_rawgeti = 0x78B7C80;
@@ -45,9 +40,10 @@ namespace NewWorld {
 				const std::uint64_t lua_gettop = 0x78B7410;
 				const std::uint64_t luaL_ref = 0x78BACC0;
 				const std::uint64_t lua_getfield = 0x78B7310;
+				const std::uint64_t lua_pushnil = 0x78B7A60;  //__index
+				const std::uint64_t ScriptSystem_ExecuteFile = 0x78B7310; //// Level system is loading or %s/%s.entities_xml
+				
 			}
-
-			
 		}
 		namespace Engine {
 			const std::uint64_t Renderer = 0x138;

@@ -1,8 +1,12 @@
 ﻿#include "Entry/entry.h"
-#include <psapi.h>
 
 DWORD WINAPI MainThread(LPVOID lpReserved) {
-    NewWorld::Entry();
+
+    NewWorld::Global::NewWorld = (std::uintptr_t)(GetModuleHandle(NULL));
+
+    if (NewWorld::Global::NewWorld)
+        NewWorld::Entry();
+
     return TRUE;
 }
 
@@ -11,12 +15,12 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
     if (ul_reason_for_call == DLL_PROCESS_ATTACH)
     {
         DisableThreadLibraryCalls(hModule);
+
         AllocConsole();
         freopen_s(reinterpret_cast<FILE**>(stdin), "CONIN$", "r", stdin);
         freopen_s(reinterpret_cast<FILE**>(stdout), "CONOUT$", "w", stdout);
 
         printf("I ❤️ New World uwu\n");
-     
 
         CreateThread(0, 0, (LPTHREAD_START_ROUTINE)NewWorld::Update, 0, 0, 0);
         CreateThread(0, 0, MainThread, lpReserved, 0, 0);

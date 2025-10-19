@@ -1,11 +1,8 @@
 #ifndef Tick_H
 #define Tick_H
 
-#include "../../../SDK/sdk.h"
-
 namespace NewWorld {
 	namespace Hooks {
-
 		namespace Component
 		{
             typedef void(*ComponentApplicationTick_s) (uintptr_t, float);
@@ -20,12 +17,12 @@ namespace NewWorld {
                     return;
                 }
 
-                const size_t MAX_NODES = 5000;
+                const size_t MAX_NODES = 25;
                 size_t count = 0;
                 uintptr_t node = listHead;
                 uintptr_t slot_value = listHead;
                 std::vector<uintptr_t> temp_objs;
-                temp_objs.reserve(5000);
+                temp_objs.reserve(25);
 
                 if (!Memory::SafeRead(shead_slot, slot_value)) slot_value = listHead;
 
@@ -54,7 +51,6 @@ namespace NewWorld {
                 delta_time += 0.009f;
                 if (ComponentApplicationTick_o) ComponentApplicationTick_o(rcx, delta_time);
             }
-
 		}
 	}
 }

@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClInclude Include="Entry\entry.h" />
     <ClInclude Include="Entry\hooks\Component_Tick\Tick.h" />
+    <ClInclude Include="Entry\hooks\Lua_NewState\NewState.h" />
     <ClInclude Include="Hooks\Kiero.h" />
     <ClInclude Include="Hooks\minhook\include\MinHook.h" />
     <ClInclude Include="Hooks\minhook\src\buffer.h" />
