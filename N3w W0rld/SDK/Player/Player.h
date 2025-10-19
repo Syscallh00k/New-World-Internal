@@ -21,7 +21,7 @@ namespace NewWorld {
             uintptr_t vecPtr = Memory::CallVFunc<Fn>(WorldPosition, (uintptr_t)this);
 
             if (!vecPtr)
-                return Vector3{};
+                return Vector3(0,0,0);
 
             return *reinterpret_cast<Vector3*>(vecPtr);
         }

@@ -16,11 +16,11 @@ namespace NewWorld {
     public:
         enum VTableFunctions : size_t {
             ClassRegistry = 0xB8,
-            PreCacheLevelEntity = 0xC0
+            PreCacheLevelEntity = 0xC0,
+            IScriptSystem = 0xF0 / 8
         };
 
         IEntityClassRegistry* GetClassRegistry() const {
-            printf("[GetClassRegistry] calling vfunc index %zu\n", ClassRegistry);
             using Fn = IEntityClassRegistry * (__fastcall*)(uintptr_t);
             return Memory::CallVFunc<Fn>(ClassRegistry, (uintptr_t)this);
         }
@@ -28,9 +28,17 @@ namespace NewWorld {
         bool CachedObjects() const {
             return *(bool*)((uintptr_t)this + Offsets::Enviroment::PreCachedFlags);
         }
+        uintptr_t GetIScriptSystem() const {
 
+            uintptr_t cache = reinterpret_cast<const uintptr_t*>(this)[12];
+
+            if (!cache)
+                return 0;
+
+            using Fn = uintptr_t(__fastcall*)(uintptr_t);
+            return Memory::CallVFunc<Fn>(IScriptSystem, cache);
+		}
         uintptr_t GetPreCacheLevelEntity() const {
-            printf("[GetPreCacheLevelEntity] calling vfunc index %zu\n", PreCacheLevelEntity);
             using Fn = uintptr_t(__fastcall*)(uintptr_t, uintptr_t);
             uintptr_t cached_objects = *(uintptr_t*)((uintptr_t)this + Offsets::Enviroment::CachedWorld);
             if (!cached_objects) return 0;

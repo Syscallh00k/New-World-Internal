@@ -118,6 +118,8 @@
     <None Include="Hooks\minhook\dll_resources\MinHook.def">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="Lua Scripts\DumpGame.lua" />
+    <None Include="Lua Scripts\ChatUtils.lua" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Hooks\minhook\dll_resources\MinHook.rc">

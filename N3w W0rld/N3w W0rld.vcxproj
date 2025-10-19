@@ -179,6 +179,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Hooks\minhook\dll_resources\MinHook.def" />
+    <None Include="Lua Scripts\ChatUtils.lua" />
+    <None Include="Lua Scripts\DumpGame.lua" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Hooks\minhook\dll_resources\MinHook.rc" />

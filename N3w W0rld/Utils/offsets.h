@@ -36,13 +36,15 @@ namespace NewWorld {
 				const std::uint64_t lua_pushboolean = 0x078B7870;
 				const std::uint64_t lua_tostring = 0x078B82D0;
 				const std::uint64_t lua_loadfile = 0x078BA7C0;
-				const std::uint64_t lua_pcall = 0x078CBDB0;
+				const std::uint64_t lua_cpcall = 0x078CBDB0; // =(debug command)
+				const std::uint64_t lua_pcall = 0x78B77E0; // [Debug Lib Error]:call_lua_function Call '%s' error. ErrorCode: %d, ErrorMessage: %s.\n
 				const std::uint64_t lua_rawget = 0x78B7C40;
 				const std::uint64_t lua_isfunction = 0x78B8480;
 				const std::uint64_t lua_rawgeti = 0x78B7C80;
 				const std::uint64_t LuaSafeCall = 0x1421880; //AZ::Internal::LuaSafeCall
 				const std::uint64_t lua_gettop = 0x78B7410;
 				const std::uint64_t luaL_ref = 0x78BACC0;
+				const std::uint64_t lua_getfield = 0x78B7310;
 			}
 
 			
