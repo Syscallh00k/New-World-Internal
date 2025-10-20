@@ -2,10 +2,7 @@
 
 DWORD WINAPI MainThread(LPVOID lpReserved) {
 
-    NewWorld::Global::NewWorld = (std::uintptr_t)(GetModuleHandle(NULL));
-
-    if (NewWorld::Global::NewWorld)
-        NewWorld::Entry();
+    NewWorld::Entry();
 
     return TRUE;
 }
@@ -22,6 +19,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
 
         printf("I ❤️ New World uwu\n");
 
+        NewWorld::Global::NewWorld = (std::uintptr_t)(GetModuleHandle(NULL));
         CreateThread(0, 0, (LPTHREAD_START_ROUTINE)NewWorld::Update, 0, 0, 0);
         CreateThread(0, 0, MainThread, lpReserved, 0, 0);
     }
@@ -29,3 +27,4 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
     return TRUE;
 }
 
+//7FF609D02CF0

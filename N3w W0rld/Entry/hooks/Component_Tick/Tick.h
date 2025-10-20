@@ -7,9 +7,11 @@ namespace NewWorld {
 		{
             typedef void(*ComponentApplicationTick_s) (uintptr_t, float);
             ComponentApplicationTick_s ComponentApplicationTick_o = nullptr;
-
+            static bool dumped = false;
+            static uintptr_t best_state = 0;
             void __fastcall ComponentApplicationTickHook(uintptr_t rcx, float delta_time)
             {
+               
                 const uintptr_t shead_slot = rcx + 0xF0;
                 uintptr_t listHead = 0;
                 if (!Memory::SafeRead(shead_slot, listHead) || listHead == 0 || listHead == shead_slot) {

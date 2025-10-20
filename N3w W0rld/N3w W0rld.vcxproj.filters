@@ -113,7 +113,7 @@
     <ClInclude Include="Utils\math.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Entry\hooks\Lua_NewState\NewState.h">
+    <ClInclude Include="Entry\hooks\HLua\HLua.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -123,6 +123,9 @@
     </None>
     <None Include="Lua Scripts\DumpGame.lua" />
     <None Include="Lua Scripts\ChatUtils.lua" />
+    <None Include="Lua Scripts\EBusChecker.lua" />
+    <None Include="Lua Scripts\UnStuck.lua" />
+    <None Include="Lua Scripts\Report.lua" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Hooks\minhook\dll_resources\MinHook.rc">

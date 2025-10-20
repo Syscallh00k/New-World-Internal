@@ -41,7 +41,7 @@ namespace NewWorld {
 				const std::uint64_t luaL_ref = 0x78BACC0;
 				const std::uint64_t lua_getfield = 0x78B7310;
 				const std::uint64_t lua_pushnil = 0x78B7A60;  //__index
-				const std::uint64_t ScriptSystem_ExecuteFile = 0x78B7310; //// Level system is loading or %s/%s.entities_xml
+				const std::uint64_t ScriptSystem_ExecuteFile = 0x6D42CF0; //// Level system is loading or %s/%s.entities_xml
 				
 			}
 		}
