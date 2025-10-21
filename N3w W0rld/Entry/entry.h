@@ -26,19 +26,25 @@ namespace NewWorld {
 
             if (!once)
             {
-                printf("ISystem = %p\n", Global::ISystem);
+                int dump_scripts = 0;
+				printf("Enable Lua Script Dumping? (1 = yes , 0 = no): ");
+				std::cin >> dump_scripts;
+
+                printf("\nISystem = %p\n", Global::ISystem);
                 printf("gEnv = %p\n", Global::gEnv);
 
                 std::uintptr_t l_pcallfn = (uintptr_t)(Global::NewWorld + Offsets::Functions::Lua::lua_pcall);
-                std::uintptr_t l_newstatefn = (uintptr_t)(Global::NewWorld + Offsets::Functions::Lua::lua_newstate);
+                std::uintptr_t readStringFn = (uintptr_t)(Global::NewWorld + Offsets::Functions::Lua::lua_readerString);
 
                 std::uintptr_t component_tick = (uintptr_t)(Global::NewWorld + Offsets::Functions::ComponentTick);
                 printf("[/] Component Tick Function %p\n", component_tick);
 
                 MH_Initialize();
                 MH_CreateHook((void*)component_tick, &Hooks::Component::ComponentApplicationTickHook, reinterpret_cast<void**>(&Hooks::Component::ComponentApplicationTick_o));
-                MH_CreateHook((void*)l_pcallfn, &Hooks::lua_pcall_hook, reinterpret_cast<void**>(&Hooks::lua_pcall_original));
-                //MH_CreateHook((void*)l_newstatefn, &Hooks::NewStateHook, reinterpret_cast<void**>(&Hooks::NewState_original));
+                MH_CreateHook((void*)l_pcallfn, &Hooks::lua_pcall_hook, reinterpret_cast<void**>(&Hooks::lua_pcall_original)); // -- load lua scripts
+
+                if(dump_scripts)
+                    MH_CreateHook((void*)readStringFn, &Hooks::reader_string_hook, reinterpret_cast<void**>(&Hooks::reader_string_original));// -- dump lua scripts
 
                 printf("[/] Placed Hooks\n");
                 MH_EnableHook(MH_ALL_HOOKS);

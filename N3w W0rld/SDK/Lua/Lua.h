@@ -11,7 +11,7 @@ namespace NewWorld {
     class Lua {
     public:
         void OpenLib() {
-            using fn = void(*)(uintptr_t);
+            using fn = void(__fastcall*)(uintptr_t);
             auto call = reinterpret_cast<fn>(Global::NewWorld + Offsets::Functions::Lua::luaL_openlibs);
             call((uintptr_t)this);
         }

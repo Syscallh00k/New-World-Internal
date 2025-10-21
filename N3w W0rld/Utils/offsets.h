@@ -39,10 +39,12 @@ namespace NewWorld {
 				const std::uint64_t LuaSafeCall = 0x1421880; //AZ::Internal::LuaSafeCall
 				const std::uint64_t lua_gettop = 0x78B7410;
 				const std::uint64_t luaL_ref = 0x78BACC0;
+				const std::uint64_t lua_readerString = 0x1421A10;
 				const std::uint64_t lua_getfield = 0x78B7310;
 				const std::uint64_t lua_pushnil = 0x78B7A60;  //__index
+				const std::uint64_t luaL_load = 0x78B7620;  //__index 7FF60A877620
 				const std::uint64_t ScriptSystem_ExecuteFile = 0x6D42CF0; //// Level system is loading or %s/%s.entities_xml
-				
+				const std::uint64_t ExecuteFile = 0x43B6460; //7FF6043B6460 0x7FF602FC0000 bool __fastcall Execute(_QWORD *lua, char *a2, char *a3, __int64 a4, unsigned int a5)
 			}
 		}
 		namespace Engine {
@@ -51,7 +53,7 @@ namespace NewWorld {
 		namespace Enviroment {
 			const std::uint64_t EntitySystem = 0x70;
 			const std::uint64_t PreCachedFlags = 0x247;
-			const std::uint64_t CachedWorld = 0xF * 8;
+			const std::uint64_t CachedWorld = 0x80;
 		}
 
 	}

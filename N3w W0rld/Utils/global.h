@@ -25,7 +25,6 @@ namespace NewWorld {
 
 		std::mutex listMtx;
 		std::vector<std::uintptr_t> EntityList;
-
 	}
 }
 
