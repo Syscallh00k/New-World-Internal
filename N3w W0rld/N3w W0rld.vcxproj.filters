@@ -116,6 +116,9 @@
     <ClInclude Include="Entry\hooks\HLua\HLua.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Eac\Eac.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Hooks\minhook\dll_resources\MinHook.def">

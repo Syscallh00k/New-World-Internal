@@ -151,6 +151,7 @@
     <ClCompile Include="Hooks\minhook\src\trampoline.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Eac\Eac.h" />
     <ClInclude Include="Entry\entry.h" />
     <ClInclude Include="Entry\hooks\Component_Tick\Tick.h" />
     <ClInclude Include="Entry\hooks\HLua\HLua.h" />

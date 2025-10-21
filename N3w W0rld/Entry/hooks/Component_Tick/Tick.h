@@ -19,12 +19,12 @@ namespace NewWorld {
                     return;
                 }
 
-                const size_t MAX_NODES = 25;
+                const size_t MAX_NODES = 250;
                 size_t count = 0;
                 uintptr_t node = listHead;
                 uintptr_t slot_value = listHead;
                 std::vector<uintptr_t> temp_objs;
-                temp_objs.reserve(25);
+                temp_objs.reserve(250);
 
                 if (!Memory::SafeRead(shead_slot, slot_value)) slot_value = listHead;
 

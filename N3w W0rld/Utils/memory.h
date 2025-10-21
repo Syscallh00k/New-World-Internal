@@ -118,11 +118,24 @@ namespace NewWorld {
 			}
 			return NULL;
 		}
-
+		static bool ReadStringSafe(uintptr_t addr, std::string& out, size_t maxLen = 512) {
+			out.clear();
+			if (!addr) return false;
+			for (size_t i = 0; i < maxLen; ++i) {
+				uint8_t c = 0;
+				if (!Memory::SafeRead<uint8_t>(addr + i, c)) {
+					return false; 
+				}
+				if (c == 0) {
+					return true; 
+				}
+				out.push_back(static_cast<char>(c));
+			}
+			return false;
+		}
 		template<typename Fn, typename... Args>
 		auto CallVFunc(size_t index, uintptr_t thiz, Args... args) {
 			if (!thiz) {
-				printf("[CallVFunc] Invalid this pointer\n");
 				using Ret = std::invoke_result_t<Fn, uintptr_t, Args...>;
 				if constexpr (!std::is_void_v<Ret>)
 					return Ret{};
@@ -132,7 +145,6 @@ namespace NewWorld {
 
 			auto vtable = *reinterpret_cast<uintptr_t**>(thiz);
 			if (!vtable) {
-				printf("[CallVFunc] Null vtable\n");
 				using Ret = std::invoke_result_t<Fn, uintptr_t, Args...>;
 				if constexpr (!std::is_void_v<Ret>)
 					return Ret{};
@@ -141,7 +153,6 @@ namespace NewWorld {
 			}
 			auto func = reinterpret_cast<Fn>(vtable[index]);
 			if (!func) {
-				printf("[CallVFunc] Invalid vfunc index %zu\n", index);
 				using Ret = std::invoke_result_t<Fn, uintptr_t, Args...>;
 				if constexpr (!std::is_void_v<Ret>)
 					return Ret{};
@@ -150,6 +161,15 @@ namespace NewWorld {
 			}
 
 			return func((uintptr_t)thiz, args...);
+		}
+		size_t ComputeHash(const char* data, size_t size)
+		{
+			size_t hash = 0;
+			for (size_t i = 0; i < size; ++i)
+			{
+				hash = hash * 31 + static_cast<unsigned char>(data[i]);
+			}
+			return hash;
 		}
 	}
 

@@ -12,6 +12,7 @@
 #include "memory.h"
 #include "offsets.h"
 #include "math.h"
+#include "../Eac/Eac.h"
 
 namespace NewWorld {
 	namespace Global {

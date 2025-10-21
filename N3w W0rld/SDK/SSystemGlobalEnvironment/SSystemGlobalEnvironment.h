@@ -25,9 +25,7 @@ namespace NewWorld {
             return Memory::CallVFunc<Fn>(ClassRegistry, (uintptr_t)this);
         }
 
-        bool CachedObjects() const {
-            return *(bool*)((uintptr_t)this + Offsets::Enviroment::PreCachedFlags);
-        }
+     
         uintptr_t GetIScriptSystem() const {
 
             uintptr_t cache = reinterpret_cast<const uintptr_t*>(this)[12];
@@ -38,12 +36,7 @@ namespace NewWorld {
             using Fn = uintptr_t(__fastcall*)(uintptr_t);
             return Memory::CallVFunc<Fn>(IScriptSystem, cache);
 		}
-        uintptr_t GetPreCacheLevelEntity() const {
-            using Fn = uintptr_t(__fastcall*)(uintptr_t, uintptr_t);
-            uintptr_t cached_objects = *(uintptr_t*)((uintptr_t)this + Offsets::Enviroment::CachedWorld);
-            if (!cached_objects) return 0;
-            return Memory::CallVFunc<Fn>(PreCacheLevelEntity, (uintptr_t)this, cached_objects);
-        }
+        
     };
 
 }
