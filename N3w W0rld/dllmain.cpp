@@ -1,10 +1,18 @@
-﻿#include "Entry/entry.h"
+﻿#include "Render/Render.h"
 
 
 DWORD WINAPI MainThread(LPVOID lpReserved) {
 
-    NewWorld::Entry();
-
+    bool init_hook = false;
+    do
+    {
+        if (kiero::init(kiero::RenderType::D3D11) == kiero::Status::Success)
+        {
+            printf("placed render hook\n");
+            kiero::bind(8, (void**)&oPresent, hkPresent);
+            init_hook = true;
+        }
+    } while (!init_hook);
     return TRUE;
 }
 
@@ -14,21 +22,20 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
     {
         DisableThreadLibraryCalls(hModule);
         AllocConsole();
-        freopen_s(reinterpret_cast<FILE**>(stdin), "CONIN$", "r", stdin);
-        freopen_s(reinterpret_cast<FILE**>(stdout), "CONOUT$", "w", stdout);
+        freopen_s(reinterpret_cast<FILE**>(stdin), _("CONIN$"), _("r"), stdin);
+        freopen_s(reinterpret_cast<FILE**>(stdout), _("CONOUT$"), _("w"), stdout);
 
         NewWorld::Global::NewWorld = (std::uintptr_t)(GetModuleHandle(NULL));
-        printf("process base 0x%p\n", NewWorld::Global::NewWorld);
+        printf(_("process base 0x%p\n"), NewWorld::Global::NewWorld);
 
-        printf("I Love New World uwu\n");
-        printf("Fixing Eac Heart Beat :)\n");
+        printf(_("I Love New World uwu\n"));
+        printf(_("Fixing Eac Heart Beat :)\n"));
        
-		MH_Initialize();
-        NewWorld::Eac::Setup();
-        NewWorld::Eac::CreateHooks();
-	
+		//MH_Initialize();
+        //NewWorld::Eac::Setup();
+       // NewWorld::Eac::CreateHooks();
 
-        CreateThread(0, 0, (LPTHREAD_START_ROUTINE)NewWorld::Update, 0, 0, 0);
+        //CreateThread(0, 0, (LPTHREAD_START_ROUTINE)NewWorld::Update, 0, 0, 0);
         CreateThread(0, 0, MainThread, lpReserved, 0, 0);
     }
 

@@ -71,7 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Users\parke\OneDrive\Desktop\New-World-Internal\N3w W0rld\Hooks\minhook\include;C:\Users\parke\Desktop\New-World-Internal\N3w W0rld\Hooks\minhook\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;C:\Users\parke\OneDrive\Desktop\New-World-Internal\N3w W0rld\Hooks\minhook\include;C:\Users\parke\Desktop\New-World-Internal\N3w W0rld\Hooks\minhook\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -149,6 +150,12 @@
     <ClCompile Include="Hooks\minhook\src\hde\hde64.c" />
     <ClCompile Include="Hooks\minhook\src\hook.c" />
     <ClCompile Include="Hooks\minhook\src\trampoline.c" />
+    <ClCompile Include="imgui\imgui.cpp" />
+    <ClCompile Include="imgui\imgui_demo.cpp" />
+    <ClCompile Include="imgui\imgui_draw.cpp" />
+    <ClCompile Include="imgui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="imgui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Eac\Eac.h" />
@@ -164,6 +171,15 @@
     <ClInclude Include="Hooks\minhook\src\hde\table32.h" />
     <ClInclude Include="Hooks\minhook\src\hde\table64.h" />
     <ClInclude Include="Hooks\minhook\src\trampoline.h" />
+    <ClInclude Include="imgui\imconfig.h" />
+    <ClInclude Include="imgui\imgui.h" />
+    <ClInclude Include="imgui\imgui_impl_dx11.h" />
+    <ClInclude Include="imgui\imgui_impl_win32.h" />
+    <ClInclude Include="imgui\imgui_internal.h" />
+    <ClInclude Include="imgui\imstb_rectpack.h" />
+    <ClInclude Include="imgui\imstb_textedit.h" />
+    <ClInclude Include="imgui\imstb_truetype.h" />
+    <ClInclude Include="Render\Render.h" />
     <ClInclude Include="SDK\IAntiCheatManager\IAntiCheatManager.h" />
     <ClInclude Include="SDK\IEntityClassRegistry\IEntityClassRegistry.h" />
     <ClInclude Include="SDK\IEntityIt\IEntityIt.h" />
@@ -178,11 +194,13 @@
     <ClInclude Include="Utils\math.h" />
     <ClInclude Include="Utils\memory.h" />
     <ClInclude Include="Utils\offsets.h" />
+    <ClInclude Include="Utils\xor.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Hooks\minhook\dll_resources\MinHook.def" />
     <None Include="Lua Scripts\ChatUtils.lua" />
     <None Include="Lua Scripts\DumpGame.lua" />
+    <None Include="Lua Scripts\DumpGame_v2.lua" />
     <None Include="Lua Scripts\EBusChecker.lua" />
     <None Include="Lua Scripts\Report.lua" />
     <None Include="Lua Scripts\UnStuck.lua" />

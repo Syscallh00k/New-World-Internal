@@ -1,6 +1,8 @@
-#include <random>
 #ifndef Eac_H
 #define Eac_H
+
+#include <random>
+
 EXTERN_C typedef uint64_t EOS_NotificationId;
 
 #define EOS_PASTE(...) __VA_ARGS__
@@ -65,16 +67,16 @@ namespace NewWorld {
 		HMODULE eac_dll;
 
 		const char* tFunction_list[10] = {
-			"EOS_Auth_VerifyUserAuth",
-			"EOS_AntiCheatServer_UnregisterClient",
-			"EOS_AntiCheatServer_RegisterClient",
-			"EOS_Initialize",
-			"EOS_Mercury_Tick",
-			"EOS_Mercury_Initialize",
-			"EOS_AntiCheatClient_BeginSession",
-			"EOS_P2P_CloseConnection",
-			"EOS_Platform_Tick",
-			"EOS_AntiCheatClient_AddNotifyClientIntegrityViolated"
+			_("EOS_Auth_VerifyUserAuth"),
+			_("EOS_AntiCheatServer_UnregisterClient"),
+			_("EOS_AntiCheatServer_RegisterClient"),
+			_("EOS_Initialize"),
+			_("EOS_Mercury_Tick"),
+			_("EOS_Mercury_Initialize"),
+			_("EOS_AntiCheatClient_BeginSession"),
+			_("EOS_P2P_CloseConnection"),
+			_("EOS_Platform_Tick"),
+			_("EOS_AntiCheatClient_AddNotifyClientIntegrityViolated")
 		};
 
 		struct Functions {
@@ -93,77 +95,56 @@ namespace NewWorld {
 		Functions func;
 
 		void Setup() {
-			eac_dll = LoadLibraryA("EOSSDK-Win64-Shipping.dll");
+			eac_dll = LoadLibraryA(_("EOSSDK-Win64-Shipping.dll"));
 			if (!eac_dll) {
-				printf("[/] Failed To Get Eac Module\n");
+				printf(_("[/] Failed To Get Eac Module\n"));
 				return;
 			}
-			printf("[/] Eac Module Found\n");
-			printf("[/] Fixing Eac Module\n");
+			printf(_("[/] Eac Module Found\n"));
+			printf(_("[/] Fixing Eac Module\n"));
 
 			for (int i = 0; i < sizeof(tFunction_list) / sizeof(tFunction_list[0]); i++) {
 				((void**)&func)[i] = GetProcAddress(eac_dll, tFunction_list[i]);
-				printf("%s %p\n", tFunction_list[i], ((void**)&func)[i]);
 			}
 		}
 
 		uintptr_t MercuryInitializeHook(uintptr_t param) {
-			printf("[/] EOS_Mercury_Initialize Hooked arg %p caller %p\n", param, _ReturnAddress());
-			return 0;
+			return NULL;
 		}
 
 		uintptr_t MercuryTickHook() {
-			printf("[/] EOS_Mercury_Tick Hooked caller %p\n", _ReturnAddress());
-			return 0;
+			return NULL;
 		}
 
 		uintptr_t AuthVerifyUserAuthHook(uintptr_t a1, uintptr_t a2, uintptr_t a3) {
-			uintptr_t ret = EOS_Auth_VerifyUserAuth_o(a1, a2, a3);
-			printf("[/] EOS_Auth_VerifyUserAuth Hooked ret %p caller %p\n", ret, _ReturnAddress());
-			return 0;
+			return NULL;
 		}
 
 		uintptr_t AntiCheatServerUnregisterClientHook(uintptr_t a1, uintptr_t a2) {
-			printf("[/] EOS_AntiCheatServer_UnregisterClient Hooked ret %p caller %p\n", _ReturnAddress());
 			return NULL;
 		}
 
 		uintptr_t AntiCheatServerRegisterClientHook(uintptr_t a1, uintptr_t a2) {
-			uintptr_t ret = EOS_AntiCheatServer_RegisterClient_o(a1, a2);
-			printf("[/] EOS_AntiCheatServer_RegisterClient Hooked ret %p caller %p\n", ret, _ReturnAddress());
-			return ret;
+			return NULL;
 		}
 
 		uintptr_t InitializeHook(uintptr_t param) {
-			printf("[/] EOS_Initialize Hooked arg %p ret %p caller %p\n", param, _ReturnAddress());
 			return NULL;
 		}
 
 		uintptr_t AntiCheatClientBeginSessionHook(uintptr_t a1, uintptr_t a2) {
-			uintptr_t ret = EOS_AntiCheatClient_BeginSession_o(a1, a2);
-			printf("[/] EOS_AntiCheatClient_BeginSession Hooked ret %p caller %p\n", ret, _ReturnAddress());
-			return ret;
+			return NULL;
 		}
 
 		uintptr_t P2PCloseConnectionHook(uintptr_t a1, uintptr_t a2) {
-			printf("[/] EOS_P2P_CloseConnection Hooked ret %p caller %p\n", _ReturnAddress());
-			return 0;
+			return NULL;
 		}
 
 		uintptr_t PlatformTickHook(uintptr_t param) {
-			printf("[/] EOS_Platform_Tick Hooked caller %p\n", _ReturnAddress());
-			return 0;
+			return NULL;
 		}
 
 		uintptr_t EOS_AntiCheatClient_AddNotifyClientIntegrityViolatedHook(uintptr_t a1, uintptr_t a2, uintptr_t a3, uintptr_t a4) {
-			printf("[/] EOS_AntiCheatClient_AddNotifyClientIntegrityViolated Hooked caller %p\n", _ReturnAddress());
-			if (a4) {
-				EOS_AntiCheatClient_OnClientIntegrityViolatedCallbackInfo info = { 0 };
-				info.ViolationType = 0;
-				info.ClientData = (void*)a3;
-				info.ViolationMessage = 0;
-
-			}
 			std::random_device dev;
 			std::mt19937 rng(dev());
 			std::uniform_int_distribution<std::mt19937::result_type> dist6(1, 199);
@@ -211,8 +192,8 @@ namespace NewWorld {
 			MH_CreateHook(NewWorld::Eac::func.EOS_AntiCheatServer_RegisterClient, &NewWorld::Eac::AntiCheatServerRegisterClientHook, reinterpret_cast<LPVOID*>(&NewWorld::Eac::EOS_AntiCheatServer_RegisterClient_o));
 			MH_EnableHook(NewWorld::Eac::func.EOS_AntiCheatServer_RegisterClient);
 
-			//MH_CreateHook(NewWorld::Eac::func.EOS_Initialize, &NewWorld::Eac::InitializeHook, reinterpret_cast<LPVOID*>(&NewWorld::Eac::EOS_Initialize_o));
-			//MH_EnableHook(NewWorld::Eac::func.EOS_Initialize);
+			MH_CreateHook(NewWorld::Eac::func.EOS_Initialize, &NewWorld::Eac::InitializeHook, reinterpret_cast<LPVOID*>(&NewWorld::Eac::EOS_Initialize_o));
+			MH_EnableHook(NewWorld::Eac::func.EOS_Initialize);
 
 			MH_CreateHook(NewWorld::Eac::func.EOS_AntiCheatClient_BeginSession, &NewWorld::Eac::AntiCheatClientBeginSessionHook, reinterpret_cast<LPVOID*>(&NewWorld::Eac::EOS_AntiCheatClient_BeginSession_o));
 			MH_EnableHook(NewWorld::Eac::func.EOS_AntiCheatClient_BeginSession);

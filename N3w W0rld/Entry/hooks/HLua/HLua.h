@@ -1,8 +1,5 @@
 #ifndef HLua_H
 #define HLua_H
-#include <fstream>
-#include <map>
-#include <set>
 
 namespace NewWorld {
     namespace Hooks {
@@ -45,7 +42,14 @@ namespace NewWorld {
 
         const char* __fastcall reader_string_hook(uintptr_t L, void* ud, size_t* size)
         {
+            static bool enabled = false;
             const char* ret = reader_string_original(L, ud, size);
+
+            if(GetAsyncKeyState(VK_F2) & 0x1)
+                enabled = !enabled;
+			
+            if (!enabled)
+                return ret;
 
             if (!ret || !size || *size == 0)
             {
@@ -66,14 +70,14 @@ namespace NewWorld {
 
             if (!fileEntry.first.is_open())
             {
-                std::filesystem::path basePath = "C:\\Dump\\GameScripts";
+                std::filesystem::path basePath = _("C:\\Dump\\GameScripts");
                 std::filesystem::create_directories(basePath);
 
                 char folderName[64];
-                sprintf_s(folderName, "%d", g_scriptCount);
+                sprintf_s(folderName, _("%d"), g_scriptCount);
                 std::filesystem::path filePath = basePath / folderName;
                 std::filesystem::create_directories(filePath);
-                filePath /= "EncodedScript.luac";
+                filePath /= _("EncodedScript.luac");
 
                 fileEntry.first.open(filePath, std::ios::binary | std::ios::out);
                 g_scriptCount++;
@@ -98,28 +102,28 @@ namespace NewWorld {
             if ((GetAsyncKeyState(VK_F1) & 0x1) && (ret == 0))
             {
                 Lua* lua = reinterpret_cast<Lua*>(L);
-                printf("Loading lua script\n");
+                printf(_("Loading lua script\n"));
 
                 lua->OpenLib();
 
-                int a = lua->LoadFile("C:\\NW_LUA\\EBusChecker.lua");
+                int a = lua->LoadFile(_("C:\\NW_LUA\\EBusChecker.lua"));
                 if (a != 0) {
-                    printf("LoadFile failed with error: %d\n", a);
+                    printf(_("LoadFile failed with error: %d\n"), a);
                     const char* error = lua->ToString(-1);
-                    if (error) printf("Error: %s\n", error);
+                    if (error) printf(_("Error: %s\n"), error);
                     return ret;
                 }
 
-                printf("lua script loaded in memory\n");
+                printf(_("lua script loaded in memory\n"));
 
                 int b = lua->pCall(0, 0, 0);
                 if (b != 0) {
-                    printf("pCall failed with error: %d\n", b);
+                    printf(_("pCall failed with error: %d\n"), b);
                     const char* error = lua->ToString(L);
-                    if (error) printf("Error: %s\n", error);
+                    if (error) printf(_("Error: %s\n"), error);
                     return ret;
                 }
-                printf("lua script executed\n");
+                printf(_("lua script executed\n"));
                 loaded_script = true;
             }
 

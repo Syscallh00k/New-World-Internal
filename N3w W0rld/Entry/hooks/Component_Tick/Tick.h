@@ -11,46 +11,39 @@ namespace NewWorld {
             static uintptr_t best_state = 0;
             void __fastcall ComponentApplicationTickHook(uintptr_t rcx, float delta_time)
             {
-               
-                const uintptr_t shead_slot = rcx + 0xF0;
-                uintptr_t listHead = 0;
-                if (!Memory::SafeRead(shead_slot, listHead) || listHead == 0 || listHead == shead_slot) {
+                uintptr_t listHeadAddr = rcx + 0xF0;
+                uintptr_t firstNode = 0;
+                if (!Memory::SafeRead(listHeadAddr, firstNode) || firstNode == 0 || firstNode == listHeadAddr) {
                     if (ComponentApplicationTick_o) ComponentApplicationTick_o(rcx, delta_time);
                     return;
                 }
 
                 const size_t MAX_NODES = 250;
                 size_t count = 0;
-                uintptr_t node = listHead;
-                uintptr_t slot_value = listHead;
+                uintptr_t currentNode = firstNode;
                 std::vector<uintptr_t> temp_objs;
                 temp_objs.reserve(250);
 
-                if (!Memory::SafeRead(shead_slot, slot_value)) slot_value = listHead;
-
                 do
                 {
-                    uintptr_t next = 0;
-                    if (!Memory::SafeRead(node, next)) break;
-
-                    temp_objs.emplace_back(node);
-
+                    temp_objs.emplace_back(currentNode);
                     ++count;
+
                     if (count >= MAX_NODES) break;
-                    if (next == 0) break;
 
-                    node = next;
-                    Memory::SafeRead(shead_slot, slot_value);
+                    uintptr_t nextNode = 0;
+                    if (!Memory::SafeRead(currentNode, nextNode) || nextNode == 0)
+                        break;
 
-                } while (node != slot_value);
+                    currentNode = nextNode;
+
+                } while (currentNode != listHeadAddr);
 
                 {
                     std::lock_guard<std::mutex> lock(Global::listMtx);
                     Global::EntityList.swap(temp_objs);
-                    temp_objs.clear();
                 }
 
-                delta_time += 0.009f;
                 if (ComponentApplicationTick_o) ComponentApplicationTick_o(rcx, delta_time);
             }
 		}

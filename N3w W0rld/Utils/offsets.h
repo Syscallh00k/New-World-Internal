@@ -1,8 +1,6 @@
 #ifndef OFFSETS_H
 #define OFFSETS_H
 
-#include <cstdio>
-
 namespace NewWorld {
 	namespace Offsets {
 		namespace Global {

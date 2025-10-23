@@ -8,7 +8,19 @@
 #include <filesystem>
 #include <mutex>
 #include <MinHook.h>
+#include <d3d11.h>
+#include <dxgi.h>
+#include <fstream>
+#include <map>
+#include <set>
 
+//imgui
+#include "../imgui/imgui.h"
+#include "../imgui/imgui_impl_dx11.h"
+#include "../imgui/imgui_impl_win32.h"
+
+#include "../Hooks/kiero.h"
+#include "xor.h"
 #include "memory.h"
 #include "offsets.h"
 #include "math.h"

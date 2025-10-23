@@ -1,8 +1,6 @@
 #ifndef MEMORY_H
 #define MEMORY_H
 
-#include <Windows.h>
-
 typedef struct _IMAGE_DOS_HEADERS {      // DOS .EXE header
 	WORD   e_magic;                     // Magic number
 	WORD   e_cblp;                      // Bytes on last page of file
@@ -44,11 +42,11 @@ namespace NewWorld {
 		}
 
         void DumpVTable(void* obj, size_t count = 32) {
-            printf("DumpVTable for obj=%p\n", obj);
+            printf(_("DumpVTable for obj=%p\n"), obj);
             uintptr_t* vtab = nullptr;
             __try { vtab = *reinterpret_cast<uintptr_t**>(obj); }
             __except (EXCEPTION_EXECUTE_HANDLER) {
-                printf("Failed to read vptr\n");
+                printf(_("Failed to read vptr\n"));
                 return;
             }
             printf("vtable = %p\n", (void*)vtab);
@@ -56,12 +54,12 @@ namespace NewWorld {
                 uintptr_t entry = 0;
                 __try { entry = vtab[i]; }
                 __except (EXCEPTION_EXECUTE_HANDLER) {
-                    printf("vtable[%zu] read exception\n", i);
+                    printf(_("vtable[%zu] read exception\n"), i);
                     break;
                 }
                 MEMORY_BASIC_INFORMATION mbi;
                 VirtualQuery((void*)entry, &mbi, sizeof(mbi));
-                printf("[%02zu] %p  module=%p  prot=0x%x\n", i, (void*)entry, mbi.AllocationBase, mbi.Protect);
+                printf(_("[%02zu] %p  module=%p  prot=0x%x\n"), i, (void*)entry, mbi.AllocationBase, mbi.Protect);
             }
         }
 		template<typename T>

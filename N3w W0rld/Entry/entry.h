@@ -24,16 +24,14 @@ namespace NewWorld {
             {
                 std::uintptr_t l_pcallfn = (uintptr_t)(Global::NewWorld + Offsets::Functions::Lua::lua_pcall);
                 std::uintptr_t readStringFn = (uintptr_t)(Global::NewWorld + Offsets::Functions::Lua::lua_readerString);
-
                 std::uintptr_t component_tick = (uintptr_t)(Global::NewWorld + Offsets::Functions::ComponentTick);
-                printf("[/] Component Tick Function %p\n", component_tick);
 
                 MH_CreateHook((void*)component_tick, &Hooks::Component::ComponentApplicationTickHook, reinterpret_cast<void**>(&Hooks::Component::ComponentApplicationTick_o));
                 MH_CreateHook((void*)l_pcallfn, &Hooks::lua_pcall_hook, reinterpret_cast<void**>(&Hooks::lua_pcall_original)); // -- load lua scripts
 
                 MH_CreateHook((void*)readStringFn, &Hooks::reader_string_hook, reinterpret_cast<void**>(&Hooks::reader_string_original));// -- dump lua scripts
 
-                printf("[/] Placed Hooks\n");
+                printf(_("[/] Placed Hooks\n"));
                 MH_EnableHook(MH_ALL_HOOKS);
                 once = true;
             }
