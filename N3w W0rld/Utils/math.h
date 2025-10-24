@@ -9,10 +9,8 @@ namespace NewWorld{
 	public:
 		float x, y, z;
 
-		Vector3(float _x, float _y, float _z) {
-			_x = x;
-			_y = y;
-			_z = z;
+		Vector3(float _x, float _y, float _z)
+			: x(_x), y(_y), z(_z) {
 		}
 		Vector3 operator+(Vector3 value) {
 			return Vector3(value.x + x, value.y + y, value.z + z);

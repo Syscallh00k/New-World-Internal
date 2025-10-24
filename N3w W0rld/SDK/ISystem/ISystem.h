@@ -54,9 +54,9 @@ namespace NewWorld {
             return Memory::CallVFunc<Fn>(PhysicalWorld, (uintptr_t)this);
         }
 
-        uintptr_t GetRenderer() {
+        IRender* GetRenderer() {
             using Fn = uintptr_t(__fastcall*)(uintptr_t);
-            return Memory::CallVFunc<Fn>(Renderer, (uintptr_t)this);
+            return (IRender*)Memory::CallVFunc<Fn>(Renderer, (uintptr_t)this);
         }
     };
 

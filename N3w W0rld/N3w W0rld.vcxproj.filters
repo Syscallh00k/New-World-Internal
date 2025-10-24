@@ -167,6 +167,9 @@
     <ClInclude Include="Render\Render.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SDK\IRender\IRender.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Hooks\minhook\dll_resources\MinHook.def">

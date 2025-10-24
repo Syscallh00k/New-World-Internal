@@ -14,7 +14,6 @@ namespace NewWorld {
             if (!Global::NewWorld)continue;
 
             Global::ISystem = *(uintptr_t*)(Global::NewWorld + Offsets::Global::MainSystem);
-
             Global::gEnv = *(uintptr_t*)(Global::NewWorld + Offsets::Global::MainEnviorment);
 
             ISystem* system = reinterpret_cast<ISystem*>(Global::ISystem);
@@ -40,8 +39,19 @@ namespace NewWorld {
 
     void Entry() {
         while (true) {
-            if (!Global::gEnv)continue;
+            if (!Global::gEnv || !Global::ISystem)continue;
 
+            ISystem* system = reinterpret_cast<ISystem*>(Global::ISystem);
+
+            IRender* render = system->GetRenderer();
+            if (!render)continue;
+
+         /*   float color[4] = { 1,0,.5, 1 };
+            float _color[4] = { 0,1,.5, 1 };
+            render->DrawText2D(25, 10, 1.f, color, true, "Legend");
+            render->DrawText2D(25, 25, 1.f, _color, false, "[F1] Load Script");
+            render->DrawText2D(25, 40, 1.f, _color, false, "[F2] Dump Game Scripts");*/
+          
             std::vector<std::uintptr_t> list;
             {
                 std::lock_guard<std::mutex> lock(Global::listMtx);
@@ -67,7 +77,7 @@ namespace NewWorld {
                 if (!Memory::ReadStringSafe(container_name_ptr, containerName, sizeof(std::string)))
                     continue;
 
-                printf("container %p %s\n", reinterpret_cast<void*>(entity_ptr), containerName.c_str());
+               // printf("container %p %s\n", reinterpret_cast<void*>(entity_ptr), containerName.c_str());
             }
         }
     }

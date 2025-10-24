@@ -6,6 +6,7 @@
 #include "IEntityClassRegistry/IEntityClassRegistry.h"
 #include "IEntityIt/IEntityIt.h"
 #include "IEntitySystem/IEntitySystem.h"
+#include "IRender/IRender.h"
 #include "ISystem/ISystem.h"
 #include "Player/Player.h"
 #include "IObjManager/IObjectManager.h"

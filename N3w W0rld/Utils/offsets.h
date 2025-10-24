@@ -16,6 +16,12 @@ namespace NewWorld {
 				const std::uint64_t ThrowHeatbeatThree = 0x44670D0;
 				const std::uint64_t EacSetup = 0x4464120;
 			}
+			//0x7FF6D62B0000
+			//https://github.com/aws/lumberyard/blob/413ecaf24d7a534801cac64f50272fe3191d278f/dev/Gems/CryLegacy/Code/Source/CryAnimation/Command_Buffer.cpp#L427
+			namespace Render {
+				const std::uint64_t DrawLabel3D = 0x6BFD5A0; //w %.2f a: %.2f\nmin %.2f\nmax %.2f\n
+				const std::uint64_t DrawLabel2D = 0x6B38F0; //"SampleAddAnimFull: w:%f t:%f %s", "SampleBlendAnimPart: w:%f t:%f
+			}
 			namespace Lua {
 				const std::uint64_t luaL_openlibs = 0x78B9C40; // updated
 				const std::uint64_t lua_pushglobaltable = 0x78B7FB0; // updated

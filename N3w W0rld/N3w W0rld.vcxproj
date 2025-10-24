@@ -185,6 +185,7 @@
     <ClInclude Include="SDK\IEntityIt\IEntityIt.h" />
     <ClInclude Include="SDK\IEntitySystem\IEntitySystem.h" />
     <ClInclude Include="SDK\IObjManager\IObjectManager.h" />
+    <ClInclude Include="SDK\IRender\IRender.h" />
     <ClInclude Include="SDK\ISystem\ISystem.h" />
     <ClInclude Include="SDK\Lua\Lua.h" />
     <ClInclude Include="SDK\Player\Player.h" />
