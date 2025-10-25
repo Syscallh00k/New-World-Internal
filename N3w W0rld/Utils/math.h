@@ -24,6 +24,10 @@ namespace NewWorld{
 		Vector3 operator*(Vector3 value) {
 			return Vector3(value.x * x, value.y * y, value.z);
 		}
+
+		float Dot(const Vector3& Vec2) {
+			return this->x * Vec2.x + this->y * Vec2.y + this->z * Vec2.z;
+		}
 	};
 
 	class Vector2 {
@@ -47,6 +51,8 @@ namespace NewWorld{
 			return Vector2(value.x * x, value.y * y);
 		}
 	};
+
+	
 }
 
 #endif

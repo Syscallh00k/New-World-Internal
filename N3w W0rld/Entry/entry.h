@@ -2,6 +2,7 @@
 #define ENTRY_H
 #include "../../../SDK/sdk.h"
 
+#include "hooks/CRender/Render.h"
 #include "hooks/HLua/HLua.h"
 #include "hooks/Component_Tick/Tick.h"
 
@@ -24,11 +25,13 @@ namespace NewWorld {
                 std::uintptr_t l_pcallfn = (uintptr_t)(Global::NewWorld + Offsets::Functions::Lua::lua_pcall);
                 std::uintptr_t readStringFn = (uintptr_t)(Global::NewWorld + Offsets::Functions::Lua::lua_readerString);
                 std::uintptr_t component_tick = (uintptr_t)(Global::NewWorld + Offsets::Functions::ComponentTick);
+                std::uintptr_t render_hook = (uintptr_t)(Global::NewWorld + Offsets::Functions::Render::RenderHook);
 
                 MH_CreateHook((void*)component_tick, &Hooks::Component::ComponentApplicationTickHook, reinterpret_cast<void**>(&Hooks::Component::ComponentApplicationTick_o));
                 MH_CreateHook((void*)l_pcallfn, &Hooks::lua_pcall_hook, reinterpret_cast<void**>(&Hooks::lua_pcall_original)); // -- load lua scripts
 
                 MH_CreateHook((void*)readStringFn, &Hooks::reader_string_hook, reinterpret_cast<void**>(&Hooks::reader_string_original));// -- dump lua scripts
+                MH_CreateHook((void*)render_hook, &Hooks::CRender::RenderHook, reinterpret_cast<void**>(&Hooks::CRender::RenderHook_original));// -- Engine Rendering 
 
                 printf(_("[/] Placed Hooks\n"));
                 MH_EnableHook(MH_ALL_HOOKS);
@@ -42,45 +45,55 @@ namespace NewWorld {
             if (!Global::gEnv || !Global::ISystem)continue;
 
             ISystem* system = reinterpret_cast<ISystem*>(Global::ISystem);
+            SSystemGlobalEnviornment* env = reinterpret_cast<SSystemGlobalEnviornment*>(Global::gEnv);
 
-            IRender* render = system->GetRenderer();
-            if (!render)continue;
+            std::vector<uintptr_t> localList;
 
-         /*   float color[4] = { 1,0,.5, 1 };
-            float _color[4] = { 0,1,.5, 1 };
-            render->DrawText2D(25, 10, 1.f, color, true, "Legend");
-            render->DrawText2D(25, 25, 1.f, _color, false, "[F1] Load Script");
-            render->DrawText2D(25, 40, 1.f, _color, false, "[F2] Dump Game Scripts");*/
-          
-            std::vector<std::uintptr_t> list;
             {
                 std::lock_guard<std::mutex> lock(Global::listMtx);
-                list = Global::EntityList;
+                localList = Global::EntityList;
             }
-
-            size_t i = 0;
-            for (auto node : list)
+            std::vector<Global::ObjectComponents> final_temp;
+            for (size_t i = 0; i < localList.size(); i++)
             {
-                if (!node) continue;
+                uintptr_t entityPtr = localList[i];
 
-                uintptr_t entity_ptr = 0;
-                if (!Memory::SafeRead(node + 0x18, entity_ptr) || IsBadReadPtr((void*)entity_ptr, sizeof(uintptr_t)))
+                if (IsBadReadPtr((void*)entityPtr, sizeof(uintptr_t)))
                     continue;
 
-                Player* player = reinterpret_cast<Player*>(entity_ptr);
-                
-                uintptr_t container_name_ptr = 0;
-                if (!Memory::SafeRead<uintptr_t>(entity_ptr + 0x38, container_name_ptr) || container_name_ptr == 0)
-                    continue;
+                std::string entity_name(reinterpret_cast<char*>(entityPtr + 0x38));
+                if (entity_name.empty())continue;
+                if (entity_name.find("RootPlayer") != std::string::npos) {
+                    for (uintptr_t* i = *(uintptr_t**)(entityPtr + 0x10); i != *(uintptr_t**)(entityPtr + 0x18); i++) { // TODO make classes 4 this shit
 
-                std::string containerName;
-                if (!Memory::ReadStringSafe(container_name_ptr, containerName, sizeof(std::string)))
-                    continue;
+                        uintptr_t component = *i;
+                        if (IsBadReadPtr((void*)component, sizeof(uintptr_t)))
+                            continue;
 
-               // printf("container %p %s\n", reinterpret_cast<void*>(entity_ptr), containerName.c_str());
+                        Global::ObjectComponents _data;
+                        using fn_name = const char* (*)(uintptr_t);
+                        const char* component_name = Memory::CallVFunc<fn_name>(1, component);
+                        if (strcmp(component_name, "GameTransformComponent") == 0) {   
+                            _data.GameTransformComponent = component;
+                        }
+                       
+                        if (strcmp(component_name, "PlayerComponent") == 0) {
+                            _data.PlayerComponent = component;
+                            _data.username = reinterpret_cast<const char*>(component + Offsets::PlayerComponent::PlayerName);
+                        }
+
+                        if(_data.PlayerComponent && _data.GameTransformComponent)
+                            final_temp.push_back(_data);
+                    }
+
+
+                }
+
             }
+
+            std::lock_guard<std::mutex> lock(Global::finalMtx);
+            Global::FinalList.swap(final_temp);
         }
     }
 }
-
 #endif

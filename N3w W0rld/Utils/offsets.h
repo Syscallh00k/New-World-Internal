@@ -6,7 +6,6 @@ namespace NewWorld {
 		namespace Global {
 			const std::uint64_t MainSystem = 0xA516DB8; // updated
 			const std::uint64_t MainEnviorment = 0xA70EA60; // updated
-			
 		}
 		namespace Functions {
 			const std::uint64_t ComponentTick = 0x147AF30; // updated
@@ -21,6 +20,7 @@ namespace NewWorld {
 			namespace Render {
 				const std::uint64_t DrawLabel3D = 0x6BFD5A0; //w %.2f a: %.2f\nmin %.2f\nmax %.2f\n
 				const std::uint64_t DrawLabel2D = 0x6B38F0; //"SampleAddAnimFull: w:%f t:%f %s", "SampleBlendAnimPart: w:%f t:%f
+				const std::uint64_t RenderHook = 0x5F32290; // some random fucntion that gives us access to draw without crashing, anyfunction that gets looped will work 
 			}
 			namespace Lua {
 				const std::uint64_t luaL_openlibs = 0x78B9C40; // updated
@@ -35,6 +35,9 @@ namespace NewWorld {
 				const std::uint64_t lua_readerString = 0x1421A60; // updated Failed to load script %s.
 				const std::uint64_t lua_getfield = 0x78B7750; // updated
 			}
+		}
+		namespace PlayerComponent {
+			const std::uint64_t PlayerName = 0x198;
 		}
 		namespace Enviroment {
 			const std::uint64_t EntitySystem = 0x70;

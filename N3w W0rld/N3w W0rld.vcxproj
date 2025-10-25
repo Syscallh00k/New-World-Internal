@@ -140,6 +140,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -150,17 +151,12 @@
     <ClCompile Include="Hooks\minhook\src\hde\hde64.c" />
     <ClCompile Include="Hooks\minhook\src\hook.c" />
     <ClCompile Include="Hooks\minhook\src\trampoline.c" />
-    <ClCompile Include="imgui\imgui.cpp" />
-    <ClCompile Include="imgui\imgui_demo.cpp" />
-    <ClCompile Include="imgui\imgui_draw.cpp" />
-    <ClCompile Include="imgui\imgui_impl_dx11.cpp" />
-    <ClCompile Include="imgui\imgui_impl_win32.cpp" />
-    <ClCompile Include="imgui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Eac\Eac.h" />
     <ClInclude Include="Entry\entry.h" />
     <ClInclude Include="Entry\hooks\Component_Tick\Tick.h" />
+    <ClInclude Include="Entry\hooks\CRender\Render.h" />
     <ClInclude Include="Entry\hooks\HLua\HLua.h" />
     <ClInclude Include="Hooks\Kiero.h" />
     <ClInclude Include="Hooks\minhook\include\MinHook.h" />
@@ -171,15 +167,6 @@
     <ClInclude Include="Hooks\minhook\src\hde\table32.h" />
     <ClInclude Include="Hooks\minhook\src\hde\table64.h" />
     <ClInclude Include="Hooks\minhook\src\trampoline.h" />
-    <ClInclude Include="imgui\imconfig.h" />
-    <ClInclude Include="imgui\imgui.h" />
-    <ClInclude Include="imgui\imgui_impl_dx11.h" />
-    <ClInclude Include="imgui\imgui_impl_win32.h" />
-    <ClInclude Include="imgui\imgui_internal.h" />
-    <ClInclude Include="imgui\imstb_rectpack.h" />
-    <ClInclude Include="imgui\imstb_textedit.h" />
-    <ClInclude Include="imgui\imstb_truetype.h" />
-    <ClInclude Include="Render\Render.h" />
     <ClInclude Include="SDK\IAntiCheatManager\IAntiCheatManager.h" />
     <ClInclude Include="SDK\IEntityClassRegistry\IEntityClassRegistry.h" />
     <ClInclude Include="SDK\IEntityIt\IEntityIt.h" />
