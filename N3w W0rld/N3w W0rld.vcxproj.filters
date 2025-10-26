@@ -128,6 +128,12 @@
     <ClInclude Include="Entry\hooks\CRender\Render.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SDK\IConsole\IConsole.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\GameTransformComponent\GameTransformComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Hooks\minhook\dll_resources\MinHook.def">

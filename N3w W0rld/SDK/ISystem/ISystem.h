@@ -12,7 +12,7 @@ namespace NewWorld {
             I3DEngine = 0x1D8 / sizeof(uintptr_t),
             UserName = 0x78 / sizeof(uintptr_t),
             Unknown = 0x190L / sizeof(uintptr_t),
-            IConsole = 0x1A0L / sizeof(uintptr_t),
+            aIConsole = 0x1A0L / sizeof(uintptr_t),
 			MainCamera = 0x318 / sizeof(uintptr_t)
         };
 
@@ -31,9 +31,9 @@ namespace NewWorld {
             return Memory::CallVFunc<Fn>(MainCamera, (uintptr_t)this);
         }
 
-        uintptr_t GetIConsole() {
+        IConsole* GetIConsole() {
             using Fn = uintptr_t(__fastcall*)(uintptr_t);
-            return Memory::CallVFunc<Fn>(IConsole, (uintptr_t)this);
+            return (IConsole*)Memory::CallVFunc<Fn>(aIConsole, (uintptr_t)this);
         }
 
         const char* GetLocalUser() {

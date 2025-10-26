@@ -5,6 +5,8 @@
 
 #include "IEntityClassRegistry/IEntityClassRegistry.h"
 #include "IEntityIt/IEntityIt.h"
+#include "IConsole/IConsole.h"
+#include "GameTransformComponent/GameTransformComponent.h"
 #include "IEntitySystem/IEntitySystem.h"
 #include "IRender/IRender.h"
 #include "ISystem/ISystem.h"

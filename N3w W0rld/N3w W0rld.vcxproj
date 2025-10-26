@@ -168,6 +168,7 @@
     <ClInclude Include="Hooks\minhook\src\hde\table64.h" />
     <ClInclude Include="Hooks\minhook\src\trampoline.h" />
     <ClInclude Include="SDK\IAntiCheatManager\IAntiCheatManager.h" />
+    <ClInclude Include="SDK\IConsole\IConsole.h" />
     <ClInclude Include="SDK\IEntityClassRegistry\IEntityClassRegistry.h" />
     <ClInclude Include="SDK\IEntityIt\IEntityIt.h" />
     <ClInclude Include="SDK\IEntitySystem\IEntitySystem.h" />
@@ -175,6 +176,7 @@
     <ClInclude Include="SDK\IRender\IRender.h" />
     <ClInclude Include="SDK\ISystem\ISystem.h" />
     <ClInclude Include="SDK\Lua\Lua.h" />
+    <ClInclude Include="SDK\GameTransformComponent\GameTransformComponent.h" />
     <ClInclude Include="SDK\Player\Player.h" />
     <ClInclude Include="SDK\sdk.h" />
     <ClInclude Include="SDK\SSystemGlobalEnvironment\SSystemGlobalEnvironment.h" />

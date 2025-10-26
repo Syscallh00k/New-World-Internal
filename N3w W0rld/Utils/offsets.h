@@ -6,6 +6,7 @@ namespace NewWorld {
 		namespace Global {
 			const std::uint64_t MainSystem = 0xA516DB8; // updated
 			const std::uint64_t MainEnviorment = 0xA70EA60; // updated
+			const std::uint64_t Console = 0xA244448; // updated
 		}
 		namespace Functions {
 			const std::uint64_t ComponentTick = 0x147AF30; // updated
@@ -38,6 +39,7 @@ namespace NewWorld {
 		}
 		namespace PlayerComponent {
 			const std::uint64_t PlayerName = 0x198;
+			const std::uint64_t WorldPosition = 0x14c;
 		}
 		namespace Enviroment {
 			const std::uint64_t EntitySystem = 0x70;

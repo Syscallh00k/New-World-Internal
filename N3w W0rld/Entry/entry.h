@@ -54,45 +54,135 @@ namespace NewWorld {
                 localList = Global::EntityList;
             }
             std::vector<Global::ObjectComponents> final_temp;
+            std::vector<Global::LootComponent> loot_temp;
+
+            struct LootObjectInfo {
+                const char* class_name;
+                const char* display_name;
+            };
+
+            LootObjectInfo loot_objects[] = {
+                {"Master_Tree", "Tree"},
+                {"Poplar", "Tree"},
+                {"poplar", "Tree Stump"},
+                {"Master_Bush", "Bush"},
+                {"CutStone_mining", "Stone"},
+                {"chest", "Chest"},
+                {"Supply_Box_col", "Supply Box"},
+                {"Supply_Boxes", "Supply Box"},
+                {"Shopbarrels", "Barrel"},
+                {"firewoodpile", "Firewood"},
+                {"Basket (copy)", "Basket"}
+            };
+
             for (size_t i = 0; i < localList.size(); i++)
             {
                 uintptr_t entityPtr = localList[i];
-
                 if (IsBadReadPtr((void*)entityPtr, sizeof(uintptr_t)))
                     continue;
 
-                std::string entity_name(reinterpret_cast<char*>(entityPtr + 0x38));
-                if (entity_name.empty())continue;
-                if (entity_name.find("RootPlayer") != std::string::npos) {
-                    for (uintptr_t* i = *(uintptr_t**)(entityPtr + 0x10); i != *(uintptr_t**)(entityPtr + 0x18); i++) { // TODO make classes 4 this shit
+                char* object_class = reinterpret_cast<char*>(entityPtr + 0x38);
 
-                        uintptr_t component = *i;
-                        if (IsBadReadPtr((void*)component, sizeof(uintptr_t)))
-                            continue;
-
-                        Global::ObjectComponents _data;
-                        using fn_name = const char* (*)(uintptr_t);
-                        const char* component_name = Memory::CallVFunc<fn_name>(1, component);
-                        if (strcmp(component_name, "GameTransformComponent") == 0) {   
-                            _data.GameTransformComponent = component;
-                        }
-                       
-                        if (strcmp(component_name, "PlayerComponent") == 0) {
-                            _data.PlayerComponent = component;
-                            _data.username = reinterpret_cast<const char*>(component + Offsets::PlayerComponent::PlayerName);
-                        }
-
-                        if(_data.PlayerComponent && _data.GameTransformComponent)
-                            final_temp.push_back(_data);
+                bool is_loot_object = false;
+                const char* display_name = nullptr;
+                for (const auto& loot_obj : loot_objects)
+                {
+                    if (strcmp(object_class, loot_obj.class_name) == 0)
+                    {
+                        is_loot_object = true;
+                        display_name = loot_obj.display_name;
+                        break;
                     }
-
-
                 }
 
+                if (is_loot_object)
+                {
+                    Global::LootComponent _lootdata = {};
+                    _lootdata.type = display_name;
+
+                    uintptr_t* comp_start = *(uintptr_t**)(entityPtr + 0x10);
+                    uintptr_t* comp_end = *(uintptr_t**)(entityPtr + 0x18);
+
+                    for (uintptr_t* comp_ptr = comp_start; comp_ptr != comp_end; ++comp_ptr)
+                    {
+                        uintptr_t component = *comp_ptr;
+
+                        if (IsBadReadPtr((void*)component, sizeof(uintptr_t)) || component < 0xFFFFFFF)
+                            continue;
+
+                        using fn_name = const char* (*)(uintptr_t);
+                        const char* component_name = Memory::CallVFunc<fn_name>(1, component);
+
+                        if (strcmp(component_name, _("GameTransformComponent")) == 0) {
+                            _lootdata.GameTransformComponent = component;
+                        }
+                    }
+
+                    if (_lootdata.GameTransformComponent)
+                    {
+                        loot_temp.push_back(_lootdata);
+                    }
+                }
+
+                if (strcmp(object_class, _("RootPlayer")) != 0)
+                    continue;
+
+                Global::ObjectComponents _data = {};
+
+                uintptr_t* comp_start = *(uintptr_t**)(entityPtr + 0x10);
+                uintptr_t* comp_end = *(uintptr_t**)(entityPtr + 0x18);
+
+                for (uintptr_t* comp_ptr = comp_start; comp_ptr != comp_end; ++comp_ptr)
+                {
+                    uintptr_t component = *comp_ptr;
+                    if (IsBadReadPtr((void*)component, sizeof(uintptr_t)) || component < 0xFFFFFFF)
+                        continue;
+
+                    using fn_name = const char* (*)(uintptr_t);
+                    const char* component_name = Memory::CallVFunc<fn_name>(1, component);
+
+                    if (strcmp(component_name, _("GameTransformComponent")) == 0) {
+                        _data.GameTransformComponent = component;
+                    }
+                    else if (strcmp(component_name, _("PlayerComponent")) == 0) {
+                        _data.PlayerComponent = component;
+                        _data.username = reinterpret_cast<const char*>(component + Offsets::PlayerComponent::PlayerName);
+                    }
+                    else if (strcmp(component_name, _("CharacterComponent")) == 0) {
+                        _data.CharacterComponent = component;
+                    }
+                    else if (strcmp(component_name, _("InterestComponent")) == 0) {
+                        _data.InterestComponent = component;
+                    }
+                    else if (strcmp(component_name, _("SkinnedMeshComponent")) == 0) {
+                        _data.SkinnedMeshComponent = component;
+                    }
+
+                    if (_data.PlayerComponent && _data.GameTransformComponent &&
+                        _data.SkinnedMeshComponent && _data.InterestComponent &&
+                        _data.CharacterComponent)
+                    {
+                        break;
+                    }
+                }
+
+                if (_data.PlayerComponent && _data.GameTransformComponent &&
+                    _data.SkinnedMeshComponent && _data.InterestComponent &&
+                    _data.CharacterComponent)
+                {
+                    final_temp.push_back(_data);
+                }
             }
 
-            std::lock_guard<std::mutex> lock(Global::finalMtx);
-            Global::FinalList.swap(final_temp);
+            {
+                std::lock_guard<std::mutex> lock(Global::finalMtx);
+                Global::FinalList.swap(final_temp);
+            }
+
+            {
+                std::lock_guard<std::mutex> lock(Global::lootMtx);
+                Global::LootList.swap(loot_temp);
+            }
         }
     }
 }
